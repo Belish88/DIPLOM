@@ -1,12 +1,13 @@
 from django.core.management import BaseCommand
 
-from app_auth.models import Auth
+from app_users.models import User
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        user = Auth.objects.create(
+        user = User.objects.create(
             phone='0123456789',
+            phone_verified=True,
             is_staff=True,
             is_superuser=True
         )
