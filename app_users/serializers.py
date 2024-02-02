@@ -5,13 +5,6 @@ from rest_framework import serializers
 from app_users.validators import TrueInviteCodeValidator
 
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('phone', 'active_invite_code')
-
-
 class RegisterUserSerializer(serializers.ModelSerializer):
 
     password_again = serializers.CharField(
