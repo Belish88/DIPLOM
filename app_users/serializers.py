@@ -51,7 +51,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
                   'invite_code'
                   )
         read_only_fields = ('invite_code',)
-        validators = [TrueInviteCodeValidator(['active_invite_code', 'invite_code'])]
+        validators = [TrueInviteCodeValidator('active_invite_code')]
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -64,7 +64,6 @@ class ProfileUserSerializer(serializers.ModelSerializer):
     @staticmethod
     def get_user_list(obj: User):
         queryset = User.objects.filter(active_invite_code=obj.invite_code)
-        print(queryset)
         return [q.phone for q in queryset]
 
     def save(self,  *args, **kwargs):
