@@ -3,6 +3,7 @@ from time import sleep
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import CreateAPIView, UpdateAPIView
@@ -11,7 +12,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from app_users.models import User
 from app_users.permissions import IsPhone
-from app_users.serializers import RegisterUserSerializer, ProfileUserSerializer
+from app_users.serializers import ProfileUserSerializer, RegisterUserSerializer
 from app_users.utils import create_code, create_invite_code
 
 
@@ -47,11 +48,11 @@ def phone(request):
 
 @csrf_exempt
 @permission_classes([AllowAny])
+@swagger_auto_schema(method='post')
 @api_view(('POST',))
-def code(request):
+def code(request, pk):
+    user = User.objects.get(pk=pk)
     user_code = JSONParser().parse(request)['code']
-    user_phone = request.GET.get('phone')
-    user = User.objects.get(phone=user_phone)
 
     if user_code == user.code:
         user.phone_verify = True

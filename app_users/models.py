@@ -6,10 +6,9 @@ NULLABLE = {'blank': True, 'null': True}
 
 class User(AbstractUser):
     username = None
-
     email = models.EmailField(**NULLABLE, verbose_name="email")
-    first_name = models.CharField(**NULLABLE, verbose_name="имя")
-    last_name = models.CharField(**NULLABLE, verbose_name="фамилия")
+    first_name = models.CharField(max_length=150, **NULLABLE, verbose_name="имя")
+    last_name = models.CharField(max_length=150, **NULLABLE, verbose_name="фамилия")
 
     phone = models.CharField(unique=True, max_length=35, verbose_name='номер телефона')
     code = models.CharField(**NULLABLE, max_length=4)

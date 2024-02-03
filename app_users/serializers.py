@@ -34,15 +34,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('phone',
-                  'email',
-                  'password',
-                  'password_again',
-                  'first_name',
-                  'last_name',
-                  'active_invite_code',
-                  'invite_code'
-                  )
+        fields = ('phone', 'email', 'password', 'password_again', 'first_name',
+                  'last_name', 'active_invite_code', 'invite_code')
         read_only_fields = ('invite_code',)
         validators = [TrueInviteCodeValidator('active_invite_code')]
         extra_kwargs = {
@@ -74,17 +67,8 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('phone',
-                  'email',
-                  'password',
-                  'first_name',
-                  'last_name',
-                  'active_invite_code',
-                  'invite_code',
-                  'user_list'
-                  )
+        fields = ('phone', 'email', 'password', 'first_name', 'last_name',
+                  'active_invite_code', 'invite_code', 'user_list')
         read_only_fields = ('invite_code', 'user_list')
         validators = [TrueInviteCodeValidator('active_invite_code')]
-        extra_kwargs = {
-            'password': {'write_only': True},
-        }
+        extra_kwargs = {'password': {'write_only': True},}
