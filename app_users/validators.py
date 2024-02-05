@@ -1,6 +1,8 @@
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
-from app_users.utils import invite_code_in_db
+from app_users.models import User
 
 
 class TrueInviteCodeValidator:
@@ -10,5 +12,7 @@ class TrueInviteCodeValidator:
 
     def __call__(self, value_dict):
         if active_invite_code := value_dict.get(self.field):
-            if not invite_code_in_db(active_invite_code):
+            try:
+                get_object_or_404(User, invite_code=active_invite_code)
+            except Http404:
                 raise serializers.ValidationError({'detail': 'invite code не существует'})

@@ -5,6 +5,19 @@ from rest_framework import serializers
 from app_users.validators import TrueInviteCodeValidator
 
 
+class PhoneSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('phone',)
+
+
+class CodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('code',)
+
+
 class RegisterUserSerializer(serializers.ModelSerializer):
 
     password_again = serializers.CharField(
@@ -54,13 +67,12 @@ class ProfileUserSerializer(serializers.ModelSerializer):
 
     def save(self,  *args, **kwargs):
         user = self.instance
+        if user.active_invite_code and self.validated_data.get("active_invite_code"):
+            raise serializers.ValidationError({'detail': "Нельзя активировать больше одного invite code"})
+        if user.invite_code == self.validated_data.get('active_invite_code'):
+            raise serializers.ValidationError({'detail': 'Нельзя активировать свой invite code'})
         for field in self.fields.keys():
             if self.validated_data.get(field):
-                if field == 'active_invite_code':
-                    if user.active_invite_code:
-                        raise serializers.ValidationError({'detail': "Нельзя активировать больше одного invite code"})
-                    if self.validated_data.get(field) == user.invite_code:
-                        raise serializers.ValidationError({'detail': "Нельзя активировать свой invite code"})
                 user.__dict__[field] = self.validated_data.get(field)
         user.save()
         return user

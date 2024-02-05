@@ -3,7 +3,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.urls import path
 
 from app_users.apps import AppUsersConfig
-from app_users.views.views_api import RegisterUserAPIView, phone, code, ProfileAPIView
+from app_users.views.views_api import RegisterUserAPIView, ProfileAPIView, PhoneAPIView, VerifyPhoneAPIView
 
 app_name = AppUsersConfig.name
 
@@ -12,8 +12,8 @@ urlpatterns = [
     path('register/', RegisterUserAPIView.as_view(), name="register"),
 
     # Verify phone
-    path('phone/', phone, name="phone"),
-    path('code/<int:pk>/', code, name="code"),
+    path('phone/', PhoneAPIView.as_view(), name="phone"),
+    path('code/<int:pk>/', VerifyPhoneAPIView.as_view(), name="code"),
 
     # Authorization
     path('token/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
