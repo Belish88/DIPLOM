@@ -11,8 +11,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from app_users.models import User
-from app_users.permissions import IsPhone
-from app_users.serializers import ProfileUserSerializer, RegisterUserSerializer
+from app_users.permissions import IsPhone, IsVerifyPhone
+from app_users.serializers.serializers_api import ProfileUserSerializer, RegisterUserSerializer
 from app_users.utils import create_code, create_invite_code
 
 
@@ -25,7 +25,7 @@ class RegisterUserAPIView(CreateAPIView):
 class ProfileAPIView(UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = ProfileUserSerializer
-    permission_classes = [IsAuthenticated, IsPhone]
+    permission_classes = [IsAuthenticated, IsPhone, IsVerifyPhone]
 
 
 @csrf_exempt

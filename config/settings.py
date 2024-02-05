@@ -153,7 +153,9 @@ REST_FRAMEWORK = {
     ],
 }
 AUTH_USER_MODEL = 'app_users.User'
+LOGIN_URL = '/app_users/'
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/main'
 
 # JWT settings
 SIMPLE_JWT = {

@@ -3,7 +3,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.urls import path
 
 from app_users.apps import AppUsersConfig
-from app_users.views import RegisterUserAPIView, phone, code, ProfileAPIView
+from app_users.views.views_api import RegisterUserAPIView, phone, code, ProfileAPIView
 
 app_name = AppUsersConfig.name
 

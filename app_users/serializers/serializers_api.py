@@ -71,4 +71,4 @@ class ProfileUserSerializer(serializers.ModelSerializer):
                   'active_invite_code', 'invite_code', 'user_list')
         read_only_fields = ('invite_code', 'user_list')
         validators = [TrueInviteCodeValidator('active_invite_code')]
-        extra_kwargs = {'password': {'write_only': True},}
+        extra_kwargs = {'password': {'write_only': True}}
